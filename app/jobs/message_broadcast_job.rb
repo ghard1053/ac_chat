@@ -3,7 +3,9 @@ class MessageBroadcastJob < ApplicationJob
 
   def perform(message)
     # Do something later
-    ActionCable.server.broadcast 'room_channel', message: render_message(message)
+    # ActionCable.server.broadcast 'room_channel', message: render_message(message)
+    group = message.group
+    RoomChannel.broadcast_to(group, message: render_message(message))
   end
 
   private
